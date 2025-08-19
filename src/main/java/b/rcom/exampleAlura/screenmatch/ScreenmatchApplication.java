@@ -19,7 +19,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	@Override // run acaba sendo um metodo main
 	public void run(String... args) throws Exception {
 		var consumoApi = new ConsumoApi(); // instanciando para poder usar ela
-		var json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&Season=1&apikey=6585022c"); // joga esse endereco na variavel json
+		var json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&Season=4&apikey=6585022c"); // joga esse endereco na variavel json
 		System.out.println(json); // chama o endereco da serie, lembrando que esta usando a OMDB que na gratuito tem limites de requests
 
 		// json = consumoApi.obterDados("https://coffee.alexflipnote.dev/random.json"); // dando um exemplo de uma imagem de cafe
