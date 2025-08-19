@@ -1,7 +1,7 @@
 # Hi! 👋 I'm Luiz, Seja bem Vindo ao meu Projeto!
 
 ### 🚀 About Project
-- Este projeto trat-se de uma aplicaçao Spring Boot, que usa uma API de filmes, onde usamos packet jackson para poder fazer leitura de arquivos json, assim nas dependencias estao relevantes ao spring framework e packet jackson.
+- Este projeto trata-se de uma aplicaçao Spring Boot, que usa uma API de filmes, onde usamos packet jackson para poder fazer leitura de arquivos json, assim nas dependencias estao relevantes ao spring framework e packet jackson.
 - Assim como a build esta para poder atender com o spring.
 
 - Durante o desenvolvimento, ocorreu um conflito no arquivo ScreenmatchAplication
