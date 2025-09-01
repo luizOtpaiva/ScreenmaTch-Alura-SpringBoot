@@ -13,8 +13,8 @@ public class ConverteDados implements IConverteDados {
     @Override // metodo da interface
     public <T> T obterDados(String json, Class<T> classe) {
         try {
-            return mapper.readValue(json, classe); // ele pega do json le, e tenta transformar na classe que a pessoa passou
-        } catch (JsonProcessingException e) {
+            return null;// ele pega do json le, e tenta transformar na classe que a pessoa passou
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
