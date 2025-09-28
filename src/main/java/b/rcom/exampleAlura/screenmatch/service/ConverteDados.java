@@ -1,23 +1,28 @@
 package b.rcom.exampleAlura.screenmatch.service;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 public class ConverteDados implements IConverteDados {
 
-    private ObjectMapper mapper = new ObjectMapper(); // para conseguimos converter os dados, no c aso do Jackson
-    // mapper é o objeto do jackson que faz a conversao
+    private final ObjectMapper mapper;
 
-    @Override // metodo da interface
+    // construtor default → usado na aplicação real
+    public ConverteDados() {
+        this.mapper = new ObjectMapper();
+    }
+
+    // construtor alternativo → usado nos testes com mock
+    public ConverteDados(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    @Override
     public <T> T obterDados(String json, Class<T> classe) {
         try {
-            return mapper.readValue(json, classe);// ele pega do json le, e tenta transformar na classe que a pessoa passou
+            return mapper.readValue(json, classe);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 }
-
-

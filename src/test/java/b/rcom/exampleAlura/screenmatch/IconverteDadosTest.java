@@ -3,12 +3,14 @@ package b.rcom.exampleAlura.screenmatch;
 import b.rcom.exampleAlura.screenmatch.model.DadosSerie;
 import b.rcom.exampleAlura.screenmatch.service.ConverteDados;
 import b.rcom.exampleAlura.screenmatch.service.IConverteDados;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IConverteDadosTest {
 
-    private final IConverteDados conversor = new ConverteDados();
+    private final IConverteDados conversor = new ConverteDados(new ObjectMapper());
 
     @Test
     void deveConverterAnoDeGilmoreGirls() {

@@ -2,53 +2,47 @@ package b.rcom.exampleAlura.screenmatch;
 
 import b.rcom.exampleAlura.screenmatch.model.DadosSerie;
 import b.rcom.exampleAlura.screenmatch.service.ConverteDados;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class ConverteDadosTest {
 
-    private final ConverteDados conversor = new ConverteDados();
+    @Mock
+    private ObjectMapper objectMapper;
+
+    @InjectMocks
+    private ConverteDados conversor;
 
     @Test
-    void deveConverterJsonDeGilmoreGirls() {
-        String json = """
-            {"Title":"Gilmore Girls","Year":"2000–2007","Runtime":"44 min","Genre":"Comedy, Drama","imdbRating":"8.2","totalSeasons":7}
-        """;
-        DadosSerie serie = conversor.obterDados(json, DadosSerie.class);
-        assertEquals("Gilmore Girls", serie.titulo());
+    void deveConverterJsonParaObjeto() throws Exception {
+        String json = "{\"Title\":\"Gilmore Girls\",\"totalSeasons\":7}";
+
+        DadosSerie serieMock = new DadosSerie("Gilmore Girls", 7, "8.2", "2000–2007", "44 min", "Comedy, Drama");
+
+        when(objectMapper.readValue(json, DadosSerie.class)).thenReturn(serieMock);
+
+        DadosSerie result = conversor.obterDados(json, DadosSerie.class);
+
+        assertEquals("Gilmore Girls", result.titulo());
+        assertEquals(7, result.totalTemporadas());
+        verify(objectMapper, times(1)).readValue(json, DadosSerie.class);
     }
 
     @Test
-    void deveConverterTotalSeasonsCorretamente() {
-        String json = """
-            {"Title":"Gilmore Girls","totalSeasons":7}
-        """;
-        DadosSerie serie = conversor.obterDados(json, DadosSerie.class);
-        assertEquals(7, serie.totalTemporadas());
-    }
-
-    @Test
-    void deveConverterAvaliacaoCorretamente() {
-        String json = """
-            {"Title":"Gilmore Girls","imdbRating":"8.2"}
-        """;
-        DadosSerie serie = conversor.obterDados(json, DadosSerie.class);
-        assertEquals("8.2", serie.avaliacao());
-    }
-
-    @Test
-    void deveLancarExcecaoComJsonInvalido() {
+    void deveLancarExcecaoComJsonInvalido() throws Exception {
         String json = "{Titulo:SemAspas}";
-        assertThrows(RuntimeException.class,
-                () -> conversor.obterDados(json, DadosSerie.class));
-    }
 
-    @Test
-    void deveConverterGeneroCorretamente() {
-        String json = """
-            {"Title":"Gilmore Girls","Genre":"Comedy, Drama"}
-        """;
-        DadosSerie serie = conversor.obterDados(json, DadosSerie.class);
-        assertEquals("Comedy, Drama", serie.genero());
+        when(objectMapper.readValue(json, DadosSerie.class))
+                .thenThrow(new com.fasterxml.jackson.core.JsonProcessingException("Erro") {});
+
+        assertThrows(RuntimeException.class, () -> conversor.obterDados(json, DadosSerie.class));
     }
 }

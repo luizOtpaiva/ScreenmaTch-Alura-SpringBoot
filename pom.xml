@@ -32,7 +32,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+				<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
 		<dependency>
@@ -40,8 +40,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind - adicionando A Jackson para poder fazer a leitura do json, poderia usar a gson tambem -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
