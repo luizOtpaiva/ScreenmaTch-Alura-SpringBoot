@@ -1,5 +1,7 @@
 # Hi! 👋 I'm Luiz, Seja bem Vindo ao meu Projeto!
 
+[![CI Pipeline](https://github.com/luizOtpaiva/ScreenmaTch-Alura-SpringBoot/actions/workflows/ci.yml/badge.svg)](https://github.com/luizOtpaiva/ScreenmaTch-Alura-SpringBoot/actions/workflows/ci.yml)
+
 ### 🚀 About Project
 - Este projeto trata-se de uma aplicaçao Spring Boot, que usa uma API de filmes, onde usamos packet jackson para poder fazer leitura de arquivos json, assim nas dependencias estao relevantes ao spring framework e packet jackson.
 - Assim como a build esta para poder atender com o spring.
