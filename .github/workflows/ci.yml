@@ -79,12 +79,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [testes, empacotar]
     if: always()
-    env:
-      EMAIL_RECIPIENT: ${{ vars.EMAIL_RECIPIENT }}
-      SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-      SMTP_PORT: ${{ secrets.SMTP_PORT }}
-      SMTP_USER: ${{ secrets.SMTP_USER }}
-      SMTP_PASS: ${{ secrets.SMTP_PASS }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -94,24 +88,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y msmtp ca-certificates
 
-      - name: Preparar configuração do msmtp
-        run: |
-          cat > ~/.msmtprc <<EOF
-          defaults
-          tls on
-          tls_trust_file /etc/ssl/certs/ca-certificates.crt
-          account default
-          host $SMTP_SERVER
-          port $SMTP_PORT
-          auth on
-          user $SMTP_USER
-          password $SMTP_PASS
-          from $SMTP_USER
-          EOF
-          chmod 600 ~/.msmtprc
-
       - name: Executar script de envio de email
         run: |
-          SUBJECT="Pipeline executado para ${{ github.repository }} (ref ${{ github.ref }})"
-          BODY="Resultado - Testes: ${{ needs.testes.result }} | Build: ${{ needs.empacotar.result }}\nVeja artifacts do run no GitHub Actions."
+          SUBJECT="Pipeline finalizado para ${{ github.repository }} (branch ${{ github.ref_name }})"
+          BODY="Resultados:\n- Testes: ${{ needs.testes.result }}\n- Empacotar: ${{ needs.empacotar.result }}\n\nVeja os artifacts do run em: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           .github/scripts/send_email.sh "$SUBJECT" "$BODY"
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
