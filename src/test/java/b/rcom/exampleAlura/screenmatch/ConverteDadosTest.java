@@ -25,7 +25,7 @@ class ConverteDadosTest {
     void deveConverterJsonParaObjeto() throws Exception {
         String json = "{\"Title\":\"Gilmore Girls\",\"totalSeasons\":7}";
 
-        DadosSerie serieMock = new DadosSerie("Gilmore Girls", 7, "8.2", "2000–2007", "44 min", "Comedy, Drama");
+        DadosSerie serieMock = new DadosSerie("Gilmore Girls", 7, "8.3", "2000–2007", "44 min", "Comedy, Drama");
 
         when(objectMapper.readValue(json, DadosSerie.class)).thenReturn(serieMock);
 
