@@ -48,7 +48,7 @@ jobs:
   # --- JOBS DE NOTIFICAÇÃO ---
   notify:
     runs-on: ubuntu-latest
-    needs: [test, package]
+    needs: [ test, package ]
     if: success()
     steps:
       - name: Checkout do código
@@ -68,32 +68,36 @@ jobs:
           echo "Construindo classpath..."
           CP=$(mvn dependency:build-classpath -Dmdep.outputFile=/dev/stdout -q)
           echo "Compilando script..."
-          javac -cp "$CP" scripts/EmailNotifier.java
+          # --- CAMINHO CORRIGIDO AQUI ---
+          javac -cp "$CP" .github/scripts/EmailNotifier.java
           echo "Enviando e-mail de sucesso..."
-          java -cp "$CP:scripts" EmailNotifier "Sucesso no Pipeline: Screenmatch" "O pipeline foi executado com sucesso!"
+          # --- CAMINHO CORRIGIDO AQUI ---
+          java -cp "$CP:.github/scripts" EmailNotifier "Sucesso no Pipeline: Screenmatch" "O pipeline foi executado com sucesso!"
 
-  notify_failure:
-    runs-on: ubuntu-latest
-    needs: [test, package]
-    if: failure()
-    steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
-      - name: Configurar JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'maven'
-      - name: Executar script de notificação de falha
-        env:
-          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-          MAIL_TO: ${{ secrets.MAIL_TO }}
-        run: |
-          echo "Construindo classpath..."
-          CP=$(mvn dependency:build-classpath -Dmdep.outputFile=/dev/stdout -q)
-          echo "Compilando script..."
-          javac -cp "$CP" scripts/EmailNotifier.java
-          echo "Enviando e-mail de falha..."
-          java -cp "$CP:scripts" EmailNotifier "FALHA no Pipeline: Screenmatch" "Ocorreu uma falha na execução do pipeline. Verifique os logs."
+    notify_failure:
+      runs-on: ubuntu-latest
+      needs: [ test, package ]
+      if: failure()
+      steps:
+        - name: Checkout do código
+          uses: actions/checkout@v3
+        - name: Configurar JDK 17
+          uses: actions/setup-java@v3
+          with:
+            java-version: '17'
+            distribution: 'temurin'
+            cache: 'maven'
+        - name: Executar script de notificação de falha
+          env:
+            MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+            MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+            MAIL_TO: ${{ secrets.MAIL_TO }}
+          run: |
+            echo "Construindo classpath..."
+            CP=$(mvn dependency:build-classpath -Dmdep.outputFile=/dev/stdout -q)
+            echo "Compilando script..."
+            # --- CAMINHO CORRIGIDO AQUI ---
+            javac -cp "$CP" .github/scripts/EmailNotifier.java
+            echo "Enviando e-mail de falha..."
+            # --- CAMINHO CORRIGIDO AQUI ---
+            java -cp "$CP:.github/scripts" EmailNotifier "FALHA no Pipeline: Screenmatch" "Ocorreu uma falha na execução do pipeline. Verifique os logs."
