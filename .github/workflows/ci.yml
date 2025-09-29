@@ -93,10 +93,10 @@ jobs:
 
       - name: Executar script de envio de email
         run: |
-          SUBJECT=" Pipeline finalizado para ${{ github.repository }} (branch ${{ github.ref_name }})"
+          SUBJECT="📢 Pipeline finalizado para ${{ github.repository }} (branch ${{ github.ref_name }})"
           BODY="Resultados:\n- Testes: ${{ needs.testes.result }}\n- Empacotar: ${{ needs.empacotar.result }}\n\nVeja os artifacts do run em: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           bash .github/scripts/send_email.sh "$SUBJECT" "$BODY"
-        env:
+          env:
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USER: ${{ secrets.SMTP_USER }}
