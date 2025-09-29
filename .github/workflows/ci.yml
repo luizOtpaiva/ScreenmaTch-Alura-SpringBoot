@@ -74,7 +74,7 @@ jobs:
           # --- CAMINHO CORRIGIDO AQUI ---
           java -cp "$CP:.github/scripts" EmailNotifier "Sucesso no Pipeline: Screenmatch" "O pipeline foi executado com sucesso!"
 
-    notify_failure:
+  notify_failure:
       runs-on: ubuntu-latest
       needs: [ test, package ]
       if: failure()
