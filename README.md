@@ -14,9 +14,6 @@ O conflito foi resolvido entrando no pull request que deu erro e tirando uma das
 
 - Meu colega mudou uma parte do meu codigo, quando fui testar o novo codigo, no caso de ConvertesDados, todos os testes falharam, assim, fui atrás do erro, alterei e coloquei para rodar novamente, assim, arrumando o problema e fazendo todos os testes voltarem a funcionar!
 
-### Screenmatch - Spring Boot
-Este repositório contém o projeto Screenmatch, uma aplicação desenvolvida em Java com Spring Boot. O foco principal deste README é detalhar o sistema de Integração Contínua e Entrega Contínua (CI/CD) implementado com GitHub Actions.
-
 🚀 Pipeline de CI/CD
 
 Foi configurado um pipeline automatizado utilizando GitHub Actions para garantir a qualidade e a integridade do código a cada novo commit ou pull request na branch main.
