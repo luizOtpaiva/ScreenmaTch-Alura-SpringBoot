@@ -74,7 +74,7 @@ jobs:
           name: package
           path: target/*.jar
 
-  notificacao:
+  notification:
     name: Notificação por e-mail
     runs-on: ubuntu-latest
     needs: [testes, empacotar]
